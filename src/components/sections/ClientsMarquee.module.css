@@ -1,0 +1,46 @@
+.section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.label {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+.track:hover { animation-play-state: paused; }
+
+.set {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.item {
+  padding: 0 44px;
+  border-right: 1px solid var(--border);
+}
+.item:last-child { border-right: none; }
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+.track:hover .name { color: var(--gold); }

@@ -1,0 +1,85 @@
+.section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.inner {
+  max-width: 580px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.ornLine {
+  display: block;
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+.sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  gap: 0;
+  max-width: 440px;
+  margin-inline: auto;
+  margin-bottom: 16px;
+}
+.input {
+  flex: 1;
+  padding: 13px 20px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  min-width: 0;
+}
+.input::placeholder { color: var(--text-muted); }
+.input:focus { border-color: var(--gold-dim); }
+
+.submitBtn {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+  white-space: nowrap;
+}
+
+.note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 560px) {
+  .form { flex-direction: column; }
+  .input {
+    border-right: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+  .submitBtn {
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm) !important;
+    justify-content: center;
+  }
+}
