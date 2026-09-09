@@ -47,12 +47,12 @@ const CLIENT_LOGOS_ROW_2 = [
 ];
 
 const HERO_SLIDES = [
-  { cat: 'Illustration · Gary Laib', name: "Dragon's Lament", src: '/images/hero-bg.jpg' },
-  { cat: 'Anime · Chris Wilhelm', name: 'The Void Mage', src: '/images/artwork-mage.jpg' },
-  { cat: 'Concept Art · Gary Laib', name: 'The Last Knight', src: '/images/artwork-knight.jpg' },
-  { cat: 'Sequential · Chris Wilhelm', name: 'Echoes of the Rift', src: '/images/artwork-mage.jpg' },
-  { cat: 'Original Fine Art', name: 'Citadel of Ages', src: '/images/hero-bg.jpg' },
-  { cat: 'Character Concept', name: 'Infernal Champion', src: '/images/artwork-knight.jpg' },
+  { cat: 'Illustration · Key Art', name: 'Arcane — Piltover & Zaun', src: '/images/Illustration/imgi_11_arcane-11x17.jpg' },
+  { cat: 'Anime · Skyhurst Studios', name: 'Frieren: Beyond Journey’s End', src: '/images/Illustration/imgi_13_frieren.jpg' },
+  { cat: 'Concept Art · Gary Laib', name: 'Ral Zarek — Planeswalker', src: '/images/Concept Art/imgi_16_gary-laib-3rxcrzkxvcfqrosyldigc-ral-zarek.jpg' },
+  { cat: 'Illustration · Dynamic Series', name: 'Reze — The Bomb Demon', src: '/images/Illustration/imgi_3_reze-the-bomb-demon.jpg' },
+  { cat: 'Sequential · Graphic Novel', name: 'Crosslands: Azoria’s Blade', src: '/images/Illustration/imgi_28_crosslands-azoriasblade-1.jpg' },
+  { cat: 'Concept Art · Chris Wilhelm', name: 'Temple of Sahinna', src: '/images/Concept Art/imgi_4_christopher-wilhelm-templeofsahinna-02.jpg' },
 ];
 
 const SHOWS = [
@@ -91,9 +91,143 @@ const SHOWS = [
   },
 ];
 
+const SELECTED_WORKS_TABS = [
+  { id: 'illustration', label: 'Illustration' },
+  { id: 'concept-art', label: 'Concept Art' },
+  { id: 'sequential-art', label: 'Sequential Art' },
+] as const;
+
+type CategoryTab = (typeof SELECTED_WORKS_TABS)[number]['id'];
+
+const SELECTED_WORKS: Record<CategoryTab, Array<{
+  role: string;
+  src: string;
+  cat: string;
+  title: string;
+  alt: string;
+  pos?: string;
+  sizes: string;
+}>> = {
+  illustration: [
+    {
+      role: 'g-main',
+      src: '/images/Illustration/imgi_2_godzilla-02-small.jpg',
+      cat: 'Illustration · Key Art',
+      title: 'Godzilla — King of the Monsters',
+      alt: 'Godzilla illustration',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+    {
+      role: 'g-tr',
+      src: '/images/Illustration/imgi_15_dandadan.jpg',
+      cat: 'Anime · Dynamic Art',
+      title: 'Dandadan — Turbo Dash',
+      alt: 'Dandadan illustration',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-trr',
+      src: '/images/Illustration/imgi_16_jujutsukaisen.jpg',
+      cat: 'Anime · Combat Art',
+      title: 'Jujutsu Kaisen — Domain Clash',
+      alt: 'Jujutsu Kaisen illustration',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-br',
+      src: '/images/Illustration/imgi_8_demonslayers.jpg',
+      cat: 'Illustration · Battle Scene',
+      title: 'Demon Slayer — Blade & Breath',
+      alt: 'Demon Slayer illustration',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+  ],
+  'concept-art': [
+    {
+      role: 'g-main',
+      src: '/images/Concept Art/imgi_17_gary-laib-5ws-fd4al5hujegnmixk-jodah.jpg',
+      cat: 'Concept Art · MTG',
+      title: 'Jodah, Archmage Eternal',
+      alt: 'Jodah Archmage Concept Art',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+    {
+      role: 'g-tr',
+      src: '/images/Concept Art/imgi_11_christopher-wilhelm-portfolio-thalia.jpg',
+      cat: 'Character Concept · Chris Wilhelm',
+      title: 'Thalia — Hero Visual Design',
+      alt: 'Thalia Character Design',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-trr',
+      src: '/images/Concept Art/imgi_3_gary-laib-2m7ybojcwqts0jze4-ha2-baloth.jpg',
+      cat: 'Creature Concept · Gary Laib',
+      title: 'Baloth Beast Exploration',
+      alt: 'Baloth Beast Concept Art',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-br',
+      src: '/images/Concept Art/imgi_12_gary-laib-bxwdlcinflh-i-2dxty1g-grotag-goblins.jpg',
+      cat: 'Concept Art · Zendikar',
+      title: 'Grotag Goblins Character Sheet',
+      alt: 'Grotag Goblins Character Sheet',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+  ],
+  'sequential-art': [
+    {
+      role: 'g-main',
+      src: '/images/Sequential Art/imgi_6_crosslands-azoriasblade-2-pg28.jpg',
+      cat: 'Sequential Art · Splash Page',
+      title: 'Crosslands: Azoria’s Blade #2 — Page 28',
+      alt: 'Crosslands Page 28 Splash',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+    {
+      role: 'g-tr',
+      src: '/images/Sequential Art/imgi_7_voidwalkerpages1.jpg',
+      cat: 'Comic Series · Gary & Chris',
+      title: 'Voidwalker — Issue #1: Page 1',
+      alt: 'Voidwalker Comic Page 1',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-trr',
+      src: '/images/Sequential Art/imgi_9_voidwalkerpages3.jpg',
+      cat: 'Sequential Storytelling',
+      title: 'Voidwalker — Issue #1: Page 3',
+      alt: 'Voidwalker Comic Page 3',
+      pos: 'center top',
+      sizes: '25vw',
+    },
+    {
+      role: 'g-br',
+      src: '/images/Sequential Art/imgi_4_crosslands-azoriasblade-2-pg26.jpg',
+      cat: 'Graphic Novel · Action Sequence',
+      title: 'Crosslands: Azoria’s Blade #2 — Page 26',
+      alt: 'Crosslands Action Sequence Page 26',
+      pos: 'center top',
+      sizes: '(max-width:900px)100vw,50vw',
+    },
+  ],
+};
+
 export default function HomePage() {
   const [solid, setSolid] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeWorkTab, setActiveWorkTab] = useState<CategoryTab>('illustration');
 
   const secManifesto = useRef<HTMLElement>(null);
   const secGallery   = useRef<HTMLElement>(null);
@@ -252,27 +386,51 @@ export default function HomePage() {
       <section id="featured" className="gallery-wall" ref={secGallery}>
         <div className="wrap">
           <div className="gallery-wall-head">
-            <h2 className="gallery-wall-title reveal">Selected<br />Works</h2>
-            <a href="#featured" className="gallery-wall-cta reveal d2">Explore Collection →</a>
+            <div>
+              <h2 className="gallery-wall-title reveal">Selected<br />Works</h2>
+            </div>
+            {/* Category Tabs */}
+            <div className="gallery-tabs-wrap reveal d2" role="tablist" aria-label="Filter selected works">
+              {SELECTED_WORKS_TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={activeWorkTab === tab.id}
+                  className={`gallery-tab-btn ${activeWorkTab === tab.id ? 'active' : ''}`}
+                  onClick={() => setActiveWorkTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="gallery-grid">
-            <div className="g-item g-main">
-              <Image src="/images/hero-bg.jpg" alt="Dragon's Lament illustration" fill sizes="(max-width:900px)100vw,50vw" style={{ objectFit:'cover', objectPosition:'center 20%' }} />
-              <div className="g-label"><p className="g-cat">Illustration</p><p className="g-title">Dragon&apos;s Lament</p></div>
-            </div>
-            <div className="g-item g-tr">
-              <Image src="/images/artwork-mage.jpg" alt="The Void Mage" fill sizes="25vw" style={{ objectFit:'cover', objectPosition:'center top' }} />
-              <div className="g-label"><p className="g-cat">Anime · Character Art</p><p className="g-title">The Void Mage</p></div>
-            </div>
-            <div className="g-item g-trr">
-              <Image src="/images/artwork-knight.jpg" alt="Last Knight" fill sizes="25vw" style={{ objectFit:'cover' }} />
-              <div className="g-label"><p className="g-cat">Concept Art</p><p className="g-title">Last Knight</p></div>
-            </div>
-            <div className="g-item g-br">
-              <Image src="/images/artwork-mage.jpg" alt="Echoes of the Rift" fill sizes="(max-width:900px)100vw,50vw" style={{ objectFit:'cover', objectPosition:'center 60%' }} />
-              <div className="g-label"><p className="g-cat">Sequential Art</p><p className="g-title">Echoes of the Rift — Chapter 3</p></div>
-            </div>
+          <div className="gallery-grid" key={activeWorkTab}>
+            {SELECTED_WORKS[activeWorkTab].map((item, idx) => (
+              <div key={`${activeWorkTab}-${idx}`} className={`g-item ${item.role}`}>
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  fill
+                  sizes={item.sizes}
+                  style={{ objectFit: 'cover', objectPosition: item.pos || 'center top' }}
+                />
+                <div className="g-label">
+                  <p className="g-cat">{item.cat}</p>
+                  <p className="g-title">{item.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          <div className="gallery-wall-footer reveal">
+            <Link href="/portfolio" className="gallery-view-more-btn">
+              <span>View Full Portfolio</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -283,11 +441,11 @@ export default function HomePage() {
           <div className="brands-header">
             <div className="brands-eyebrow">
               <span className="brands-dot" />
-              Clients &amp; Collaborations
+              Industry Credits
             </div>
-            <h2 className="brands-title">Skyhurst Studios Clients</h2>
+            <h2 className="brands-title">Trusted by the Industry’s Best</h2>
             <p className="brands-desc">
-              From AAA game powerhouses to legendary tabletop &amp; sci-fi publishers, our directors and artists have crafted key art, character concepts, and official illustrations for the most iconic franchises in entertainment.
+              From Magic: The Gathering and Blizzard to Dungeons &amp; Dragons and Ubisoft — our artists craft key art, character concepts, and official illustrations for the most iconic worlds in gaming and publishing.
             </p>
           </div>
         </div>
@@ -334,7 +492,7 @@ export default function HomePage() {
               onClick={handleUnlinkedClick}
               className="brands-find-artist-btn"
             >
-              <span>Find The Artists</span>
+              <span>Meet The Artists</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -354,14 +512,12 @@ export default function HomePage() {
           <div className="shows-top">
             <div className="shows-label">
               <span className="shows-label-line" />
-              Live Appearances
+              Convention Tour
             </div>
             <div className="shows-top-right">
-              <h2 className="shows-title">Where to Find Us</h2>
+              <h2 className="shows-title">Meet Us In Artist Alley</h2>
               <p className="shows-desc">
-                Gary and Chris hit the convention floor every season — bringing original
-                paintings, signed prints, and exclusive canvas works you won&apos;t find anywhere online.
-                Come say hi.
+                Catch Gary and Chris on the road all season long — pick up limited-run canvases, exclusive convention prints, and get your graphic novels signed in person.
               </p>
             </div>
           </div>

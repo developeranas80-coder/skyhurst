@@ -14,14 +14,23 @@ export const metadata: Metadata = {
 };
 
 const ARTWORKS = [
-  "Dragon's Lament",
-  "The Last Paladin",
-  "Starfall Chronicles",
-  "Wandering Mystic",
-  "Echoes of the Rift — Chapter 3 Cover",
-  "Void Stalker",
-  "Elven Cartography",
-  "Other (describe in notes)",
+  'Arcane — Piltover & Zaun',
+  'Frieren: Beyond Journey’s End',
+  'Reze — The Bomb Demon (Chainsaw Man)',
+  'Chainsaw Man — Denji Awakened',
+  'Dandadan — Turbo Dash',
+  'Jujutsu Kaisen — Domain Clash',
+  'Metroid — Hunter’s Arrival',
+  'Castlevania — Belmont’s Vigil',
+  'Godzilla — King of the Monsters',
+  'Demon Slayer — Blade & Breath',
+  'Crosslands: Azoria’s Blade I & II',
+  'Ral Zarek — Planeswalker (MTG)',
+  'Jodah, Archmage Eternal (MTG)',
+  'Temple of Sahinna (Concept Art)',
+  'Thalia — Character Design',
+  'Voidwalker Comic Series',
+  'Other (describe in notes)',
 ];
 
 const SIZES = [
