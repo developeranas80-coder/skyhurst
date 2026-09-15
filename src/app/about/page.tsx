@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getShows, getProjects, getNews } from '@/lib/wordpress';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
@@ -9,6 +10,18 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 3600;
+
+function formatDateRange(start: string, end: string) {
+  if (!start) return '';
+  const s = new Date(start);
+  const e = end ? new Date(end) : null;
+  const sMonth = s.toLocaleDateString('en-US', { month: 'short' });
+  const year = (e ?? s).getFullYear();
+  if (!e || start === end) return `${sMonth} ${s.getDate()}, ${year}`;
+  const eMonth = e.toLocaleDateString('en-US', { month: 'short' });
+  if (sMonth === eMonth) return `${sMonth} ${s.getDate()}–${e.getDate()}, ${year}`;
+  return `${sMonth} ${s.getDate()} – ${eMonth} ${e.getDate()}, ${year}`;
+}
 
 const CLIENT_LOGOS_ROW_1 = [
   { name: 'Magic: The Gathering', src: '/images/clients/logo_mtg.png', w: 180, h: 68 },
@@ -46,7 +59,10 @@ const CHRIS_WORKS = [
   { src: '/images/Concept Art/imgi_5_christopher-wilhelm-hero-0014-armorer-concept.jpg', label: 'Armorer Concept' },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const upcomingShows = await getShows('upcoming');
+  const ongoingProjects = await getProjects();
+  const latestNews = await getNews(3);
   return (
     <div className={styles.page}>
 
@@ -361,6 +377,143 @@ export default function AboutPage() {
               style={{ objectFit: 'cover' }}
               priority
             />
+          </div>
+        </div>
+      </section>
+
+      {/* ── SHOW SCHEDULE SECTION ── */}
+      <section id="schedule" className={styles.scheduleSection}>
+        <div className="wrap">
+          <div className={styles.sectionHeader}>
+            <div>
+              <span className={styles.sectionPre}>On The Road</span>
+              <h2 className={styles.sectionHeading}>Convention Schedule</h2>
+            </div>
+            <Link href="/shows" className={styles.viewAllLink}>
+              <span>View Full Tour Calendar</span>
+              <span className={styles.arrowIcon}>→</span>
+            </Link>
+          </div>
+
+          <div className={styles.showsGrid}>
+            {upcomingShows.slice(0, 3).map((show) => (
+              <div key={show.id} className={styles.showCard}>
+                <div className={styles.showCardHeader}>
+                  <span className={styles.showDateBadge}>
+                    {formatDateRange(show.date_start, show.date_end)}
+                  </span>
+                  {show.booth && <span className={styles.showBoothBadge}>{show.booth}</span>}
+                </div>
+                <h3 className={styles.showTitle}>{show.title}</h3>
+                <p className={styles.showLocation}>{show.location}</p>
+                {show.badge && <span className={styles.showHighlight}>{show.badge}</span>}
+                {show.website && (
+                  <a
+                    href={show.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.showSiteLink}
+                  >
+                    Official Convention Site ↗
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ONGOING PROJECTS SECTION ── */}
+      <section id="projects" className={styles.projectsSection}>
+        <div className="wrap">
+          <div className={styles.sectionHeader}>
+            <div>
+              <span className={styles.sectionPre}>In The Atelier</span>
+              <h2 className={styles.sectionHeading}>Ongoing Projects</h2>
+            </div>
+            <span className={styles.projectsCount}>
+              {ongoingProjects.length} Active Productions
+            </span>
+          </div>
+
+          <div className={styles.projectsGrid}>
+            {ongoingProjects.map((p) => (
+              <div key={p.id} className={styles.projectCard}>
+                {p.imageUrl && (
+                  <div className={styles.projectImgWrap}>
+                    <Image
+                      src={p.imageUrl}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 350px"
+                      className={styles.projectImg}
+                    />
+                    <span className={styles.projectGenreBadge}>{p.genre}</span>
+                  </div>
+                )}
+                <div className={styles.projectContent}>
+                  <div className={styles.projectChapter}>{p.chapter}</div>
+                  <h3 className={styles.projectTitle}>{p.title}</h3>
+                  <p className={styles.projectDesc}>{p.description}</p>
+                  <div className={styles.projectArtists}>
+                    Lead: {p.artists.join(' & ')}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── NEWS & STUDIO DISPATCHES ── */}
+      <section id="news" className={styles.newsSection}>
+        <div className="wrap">
+          <div className={styles.sectionHeader}>
+            <div>
+              <span className={styles.sectionPre}>Dispatches</span>
+              <h2 className={styles.sectionHeading}>Studio News &amp; Drops</h2>
+            </div>
+          </div>
+
+          <div className={styles.newsGrid}>
+            {latestNews.map((n) => (
+              <article key={n.id} className={styles.newsCard}>
+                <div className={styles.newsMeta}>
+                  <span className={styles.newsCategory}>{n.category}</span>
+                  <span className={styles.newsDate}>
+                    {new Date(n.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </span>
+                </div>
+                <h3 className={styles.newsTitle}>{n.title}</h3>
+                <p className={styles.newsExcerpt}>{n.excerpt}</p>
+                <div className={styles.newsAuthor}>Dispatch by {n.author} · {n.readTime}</div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── DIRECT STUDIO INQUIRY BANNER ── */}
+      <section className={styles.contactCtaSection}>
+        <div className="wrap">
+          <div className={styles.contactCtaBox}>
+            <span className={styles.sectionPre}>Work With Us</span>
+            <h2 className={styles.contactCtaTitle}>
+              Have a Project or Commission in Mind?
+            </h2>
+            <p className={styles.contactCtaText}>
+              From AAA game visual development to commissioned collector illustration — Gary &amp; Chris respond within 24–48 hours.
+            </p>
+            <div className={styles.contactCtaButtons}>
+              <Link href="/contact" className={styles.contactPrimaryBtn}>
+                <span>Reach Out to Us</span>
+                <span>→</span>
+              </Link>
+              <a href="mailto:info@skyhurststudios.com" className={styles.contactSecondaryBtn}>
+                <span>info@skyhurststudios.com</span>
+                <span>↗</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
