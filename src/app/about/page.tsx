@@ -448,16 +448,18 @@ export default async function AboutPage() {
                       sizes="(max-width: 768px) 100vw, 350px"
                       className={styles.projectImg}
                     />
-                    <span className={styles.projectGenreBadge}>{p.genre}</span>
+                    {p.genre && <span className={styles.projectGenreBadge}>{p.genre}</span>}
                   </div>
                 )}
                 <div className={styles.projectContent}>
-                  <div className={styles.projectChapter}>{p.chapter}</div>
+                  {p.chapter && <div className={styles.projectChapter}>{p.chapter}</div>}
                   <h3 className={styles.projectTitle}>{p.title}</h3>
                   <p className={styles.projectDesc}>{p.description}</p>
-                  <div className={styles.projectArtists}>
-                    Lead: {p.artists.join(' & ')}
-                  </div>
+                  {p.artists && p.artists.length > 0 && (
+                    <div className={styles.projectArtists}>
+                      Lead: {p.artists.join(' & ')}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -479,14 +481,18 @@ export default async function AboutPage() {
             {latestNews.map((n) => (
               <article key={n.id} className={styles.newsCard}>
                 <div className={styles.newsMeta}>
-                  <span className={styles.newsCategory}>{n.category}</span>
+                  {n.category && <span className={styles.newsCategory}>{n.category}</span>}
                   <span className={styles.newsDate}>
-                    {new Date(n.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {n.date ? new Date(n.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
                   </span>
                 </div>
                 <h3 className={styles.newsTitle}>{n.title}</h3>
                 <p className={styles.newsExcerpt}>{n.excerpt}</p>
-                <div className={styles.newsAuthor}>Dispatch by {n.author} · {n.readTime}</div>
+                {(n.author || n.readTime) && (
+                  <div className={styles.newsAuthor}>
+                    {n.author ? `Dispatch by ${n.author}` : ''} {n.readTime ? `· ${n.readTime}` : ''}
+                  </div>
+                )}
               </article>
             ))}
           </div>
