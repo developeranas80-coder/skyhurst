@@ -1,0 +1,267 @@
+/* ── Page ─────────────────────────────────────── */
+.page {
+  padding-top: 120px;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+/* ── Header ───────────────────────────────────── */
+.header {
+  padding: 4rem 0 0;
+}
+
+.header .wrap {
+  padding-bottom: 3rem;
+}
+
+.headerPre {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(148, 171, 196, 0.7);
+  margin-bottom: 1rem;
+}
+
+.headerTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.headerSub {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.headerRule {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  width: 100%;
+}
+
+/* ── Main layout ──────────────────────────────── */
+.main {
+  padding: 5rem 0 7rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ── Shared block label ───────────────────────── */
+.blockLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(148, 171, 196, 0.6);
+  margin-bottom: 1.5rem;
+}
+
+.block {
+  margin-bottom: 3.5rem;
+}
+
+/* ── Contact rows ─────────────────────────────── */
+.contactRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.contactRow:hover {
+  opacity: 0.7;
+}
+
+.contactName {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.contactEmail {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(148, 171, 196, 0.8);
+  white-space: nowrap;
+}
+
+.rowLine {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ── FAQ ──────────────────────────────────────── */
+.faqItem {
+  margin-bottom: 1.75rem;
+}
+
+.faqQ {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.faqA {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.65;
+}
+
+/* ── Form ─────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0.5rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  padding: 0.65rem 0;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-bottom-color: #94ABC4;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.select option {
+  background: #0d1117;
+  color: #fff;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.textarea:focus {
+  border-color: #94ABC4;
+}
+
+.submitBtn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 12px 28px;
+  background: #fff;
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitBtn:hover {
+  background: #94ABC4;
+  transform: translateY(-2px);
+}
+
+/* ── Success ──────────────────────────────────── */
+.successMsg {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.successCheck {
+  font-size: 1.4rem;
+  color: #94ABC4;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.successMsg p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}

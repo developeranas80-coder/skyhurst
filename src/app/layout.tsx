@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: {
@@ -34,7 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <SmoothScroll>
-          {children}
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
         </SmoothScroll>
       </body>
     </html>

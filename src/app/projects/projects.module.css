@@ -1,0 +1,173 @@
+.page {
+  padding-top: 120px;
+  min-height: 100vh;
+  background: var(--black, #000000);
+  color: var(--white, #ffffff);
+}
+
+.header {
+  position: relative;
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  background: radial-gradient(circle at 50% 20%, rgba(78, 101, 125, 0.25), transparent 70%);
+  border-bottom: 1px solid var(--slate-border, #364452);
+}
+
+.headerContent {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-display, serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0.75rem 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background: var(--slate-pale, #94ABC4);
+  margin: 1.5rem auto;
+}
+
+.sub {
+  font-family: var(--font-body, sans-serif);
+  font-size: 1.15rem;
+  color: var(--white-dim, rgba(255, 255, 255, 0.72));
+  line-height: 1.7;
+}
+
+.projectList {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin-top: 3rem;
+}
+
+.projectCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: var(--slate-card, #222930);
+  border: 1px solid var(--slate-border, #364452);
+  border-radius: 8px;
+  padding: 2.5rem;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.projectCard:hover {
+  background: var(--slate-hover, #2D3742);
+  border-color: var(--slate-pale, #94ABC4);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 900px) {
+  .projectCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.projectImgWrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #364452;
+}
+
+.projectImg {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.projectCard:hover .projectImg {
+  transform: scale(1.04);
+}
+
+.projectMeta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.statusBadge {
+  background: #12181F;
+  color: #94ABC4;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #364452;
+  text-transform: uppercase;
+}
+
+.genreTag {
+  color: #94ABC4;
+  font-size: 0.875rem;
+}
+
+.projectTitle {
+  font-family: var(--font-display, serif);
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.chapterInfo {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.95rem;
+  color: #94ABC4;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.fullSummary {
+  font-family: var(--font-body, sans-serif);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.artistsList {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #94ABC4;
+  margin-bottom: 2rem;
+}
+
+.artistTag {
+  background: #12181F;
+  color: #ffffff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #364452;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.galleryThumb {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #364452;
+}

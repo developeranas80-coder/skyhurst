@@ -120,7 +120,7 @@ export default function OrderForm({ artworks, sizes, editions }: Props) {
           {status === 'error' && (
             <p className={styles.errorMsg}>Something went wrong. Please email us directly at skyhurststudios@gmail.com</p>
           )}
-          <button type="submit" className="btn btn-primary" disabled={status === 'sending'} id="order-submit">
+          <button type="submit" className={styles.submitBtn} disabled={status === 'sending'} id="order-submit">
             {status === 'sending' ? 'Sending…' : 'Submit Order →'}
           </button>
           <p className={styles.disclaimer}>

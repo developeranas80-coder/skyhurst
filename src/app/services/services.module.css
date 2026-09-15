@@ -1,0 +1,253 @@
+.page {
+  padding-top: 120px;
+  min-height: 100vh;
+  background: var(--black, #000000);
+  color: var(--white, #ffffff);
+}
+
+.header {
+  position: relative;
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  background: radial-gradient(circle at 50% 20%, rgba(78, 101, 125, 0.25), transparent 70%);
+  border-bottom: 1px solid var(--slate-border, #364452);
+}
+
+.headerContent {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-display, serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0.75rem 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background: var(--slate-pale, #94ABC4);
+  margin: 1.5rem auto;
+}
+
+.sub {
+  font-family: var(--font-body, sans-serif);
+  font-size: 1.15rem;
+  color: var(--white-dim, rgba(255, 255, 255, 0.72));
+  line-height: 1.7;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.serviceCard {
+  background: var(--slate-card, #222930);
+  border: 1px solid var(--slate-border, #364452);
+  border-radius: 8px;
+  padding: 2.25rem;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.serviceCard:hover {
+  transform: translateY(-6px);
+  background: var(--slate-hover, #2D3742);
+  border-color: var(--slate-pale, #94ABC4);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 24px rgba(78, 101, 125, 0.3);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: #12181F;
+  border: 1px solid #364452;
+  color: #94ABC4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.cardTitle {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.cardDesc {
+  font-family: var(--font-body, sans-serif);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.65;
+  font-size: 0.975rem;
+  margin-bottom: 1.5rem;
+}
+
+.deliverablesList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.deliverableItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+}
+
+.checkIcon {
+  color: #94ABC4;
+  font-weight: bold;
+}
+
+.cardFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.turnaround {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.8rem;
+  color: #94ABC4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #12181F;
+  border: 1px solid #4E657D;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.ctaBtn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+/* Process Section */
+.processSection {
+  background: #090D11;
+  border-top: 1px solid #222930;
+  padding: 5rem 0;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.stepCard {
+  background: #222930;
+  border: 1px solid #364452;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+
+.stepNum {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #4E657D;
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+}
+
+.stepTitle {
+  font-family: var(--font-ui, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.stepDesc {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.ctaBanner {
+  background: linear-gradient(135deg, #12181F 0%, #222930 100%);
+  border: 1px solid #4E657D;
+  border-radius: 12px;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  margin: 4rem 0 2rem;
+}
+
+.ctaBanner h2 {
+  font-family: var(--font-display, serif);
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.ctaBanner p {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.btnGold {
+  display: inline-block;
+  background: #222930;
+  border: 1px solid #94ABC4;
+  color: #ffffff;
+  font-family: var(--font-ui, sans-serif);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btnGold:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}

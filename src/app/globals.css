@@ -31,7 +31,7 @@
   --violet-dim: #12181F;
   --violet-glow: rgba(78, 101, 125, 0.25);
 
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'Syne', sans-serif;
   --font-ui: 'Syne', sans-serif;
   --font-hero: 'Syne', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
@@ -40,6 +40,11 @@
   --max: 1400px;
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display, 'Syne', sans-serif);
+}
+
 
 /* ─── Reset & Lenis Smooth Scroll ───────────── */
 *,

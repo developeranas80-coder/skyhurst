@@ -1,252 +1,370 @@
 import type { Metadata } from 'next';
-import { getShows, getNews, getProjects } from '@/lib/wordpress';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
-  title: 'About & Services',
-  description: 'Meet Gary Laib and Chris Wilhelm of Skyhurst Studios. Learn about their services, upcoming show schedule, news, and ongoing illustration projects.',
+  title: 'About Gary & Chris | Skyhurst Studios',
+  description: 'Meet Gary Laib and Chris Wilhelm of Skyhurst Studios — professional concept artists, illustrators, and animators with four decades of combined experience.',
 };
 
 export const revalidate = 3600;
 
-const ARTISTS = [
-  {
-    initial: 'G',
-    name: 'Gary Laib',
-    role: 'Illustrator & Art Director',
-    bio: `Gary Laib is a professional illustrator and art director with over two decades of experience creating fantasy and science-fiction artwork for some of the biggest names in the industry. His work spans concept art for video games, children's book illustration, trading card art, and large-format canvas paintings. Gary's signature style blends detailed linework with rich, painterly color to create images that feel both timeless and alive.`,
-    clients: ['Blizzard Entertainment', 'Wizards of the Coast', 'Paizo Publishing', 'Dark Horse Comics'],
-  },
-  {
-    initial: 'C',
-    name: 'Chris Wilhelm',
-    role: 'Game Artist & Animator',
-    bio: `Chris Wilhelm is a game artist and animator whose career has taken him across AAA studios and indie darlings alike. His concept art, character design, and sequential storytelling have earned him credits with studios including Ubisoft, Epic Games, and Activision. Chris brings a dynamic, cinematic energy to every project, treating each frame as a window into a fully-realized world.`,
-    clients: ['Ubisoft', 'Epic Games', 'Activision', 'Magic: The Gathering'],
-  },
+const CLIENT_LOGOS_ROW_1 = [
+  { name: 'Magic: The Gathering', src: '/images/clients/logo_mtg.png', w: 180, h: 68 },
+  { name: 'Activision Blizzard', src: '/images/clients/logo_activision_blizzard.png', w: 140, h: 90 },
+  { name: 'Ubisoft', src: '/images/clients/logo_ubisoft.png', w: 130, h: 90 },
+  { name: 'BattleTech', src: '/images/clients/logo_battletech.png', w: 125, h: 95 },
+  { name: 'Dungeons & Dragons', src: '/images/clients/logo_dnd.png', w: 160, h: 70 },
+  { name: '20th Century Fox', src: '/images/clients/logo_fox.png', w: 135, h: 60 },
+  { name: 'Shiny Shoe', src: '/images/clients/logo_shiny_shoe.png', w: 190, h: 48 },
+  { name: 'Legend of the Five Rings', src: '/images/clients/logo_l5r.png', w: 175, h: 72 },
 ];
 
-const SERVICES = [
-  { icon: '✦', title: 'Fantasy Illustration', desc: 'Character art, scene illustration, and cover art for games, books, and print media.' },
-  { icon: '✦', title: 'Concept Art', desc: 'Exploratory design work for characters, environments, props, and creatures for games and film.' },
-  { icon: '✦', title: 'Sequential Art', desc: 'Full graphic novel, comic book, and storyboard production from script to finished pages.' },
-  { icon: '✦', title: 'Art Direction', desc: 'Comprehensive creative direction and visual development for studios and publishers.' },
-  { icon: '✦', title: 'Children\'s Books', desc: 'Warm, expressive illustration for children\'s publishing projects of all scales.' },
-  { icon: '✦', title: 'Convention Prints', desc: 'Limited-edition fine art prints and canvas works available at shows and via direct order.' },
+const CLIENT_LOGOS_ROW_2 = [
+  { name: 'Epic Games', src: '/images/clients/logo_epic_games.png', w: 95, h: 95 },
+  { name: 'Catalyst Game Labs', src: '/images/clients/logo_catalyst.png', w: 185, h: 80 },
+  { name: 'Magic: Legends', src: '/images/clients/logo_magic_legends.png', w: 160, h: 100 },
+  { name: 'Dragon Crest', src: '/images/clients/logo_dragon_crest.png', w: 110, h: 120 },
+  { name: 'Cryptic Studios', src: '/images/clients/logo_cryptic.png', w: 110, h: 120 },
+  { name: 'NCSOFT', src: '/images/clients/logo_ncsoft.png', w: 170, h: 52 },
+  { name: 'Crafty Games', src: '/images/clients/logo_crafty_games.png', w: 150, h: 70 },
+  { name: 'Arcane Hound', src: '/images/clients/logo_arcane_hound.png', w: 120, h: 130 },
 ];
 
-function formatShowDate(start: string, end: string) {
-  const s = new Date(start);
-  const e = new Date(end);
-  const opts: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric' };
-  if (s.getMonth() === e.getMonth()) {
-    return `${s.toLocaleDateString('en-US', opts)} – ${e.getDate()}, ${e.getFullYear()}`;
-  }
-  return `${s.toLocaleDateString('en-US', opts)} – ${e.toLocaleDateString('en-US', opts)}, ${e.getFullYear()}`;
-}
+const GARY_WORKS = [
+  { src: '/images/Concept Art/imgi_16_gary-laib-3rxcrzkxvcfqrosyldigc-ral-zarek.jpg', label: 'Ral Zarek' },
+  { src: '/images/Concept Art/imgi_17_gary-laib-5ws-fd4al5hujegnmixk-jodah.jpg', label: 'Jodah' },
+  { src: '/images/Concept Art/imgi_3_gary-laib-2m7ybojcwqts0jze4-ha2-baloth.jpg', label: 'Baloth' },
+  { src: '/images/Concept Art/imgi_6_gary-laib-srkefxl59jmn8-zit5pic-portfolio-14.jpg', label: 'Portfolio' },
+];
 
-export default async function AboutPage() {
-  const [shows, news, projects] = await Promise.all([
-    getShows(),
-    getNews(5),
-    getProjects(),
-  ]);
+const CHRIS_WORKS = [
+  { src: '/images/Concept Art/imgi_4_christopher-wilhelm-templeofsahinna-02.jpg', label: 'Temple of Sahinna' },
+  { src: '/images/Concept Art/imgi_11_christopher-wilhelm-portfolio-thalia.jpg', label: 'Thalia' },
+  { src: '/images/Concept Art/imgi_9_christopher-wilhelm-christopher-wilhelm-braveorderheroes-thera.jpg', label: 'Brave Order' },
+  { src: '/images/Concept Art/imgi_5_christopher-wilhelm-hero-0014-armorer-concept.jpg', label: 'Armorer Concept' },
+];
 
-  const upcoming = shows.filter((s) => s.status === 'upcoming');
-  const past     = shows.filter((s) => s.status === 'past');
-
+export default function AboutPage() {
   return (
     <div className={styles.page}>
-      {/* ── Page header ────────────────────────────────── */}
-      <header className={styles.header}>
-        <div className={styles.headerBg} />
-        <div className={`container ${styles.headerContent}`}>
-          <span className="section-label">The People Behind The Art</span>
-          <h1 className={styles.title}>About & Services</h1>
-          <div className={styles.divider} />
-          <p className={styles.sub}>
-            Four decades of combined professional experience.<br />Two artists. One vision.
+
+      {/* ── CINEMATIC BANNER ── */}
+      <header className={styles.banner}>
+        {/* Full-bleed artwork background */}
+        <div className={styles.bannerBg}>
+          <Image
+            src="/images/Illustration/imgi_28_crosslands-azoriasblade-1.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className={styles.bannerBgImg}
+            priority
+          />
+          <div className={styles.bannerOverlay} />
+        </div>
+
+        {/* Text block */}
+        <div className={`wrap ${styles.bannerInner}`}>
+          <p className={styles.bannerPre}>Skyhurst Studios</p>
+          <h1 className={styles.bannerTitle}>Meet the Artists</h1>
+          <p className={styles.bannerSub}>
+            Two illustrators. Four decades of combined experience.<br />
+            Games, publishing, animation & the convention floor.
           </p>
+
+          {/* Split portrait strip */}
+          <div className={styles.bannerPortraits}>
+            <div className={styles.bannerPortrait}>
+              <div className={styles.bannerPortraitImg}>
+                <Image
+                  src="/images/web-gary-laib-196.jpg"
+                  alt="Gary Laib"
+                  fill
+                  sizes="220px"
+                  className={styles.bannerPortraitPhoto}
+                  priority
+                />
+              </div>
+              <div className={styles.bannerPortraitInfo}>
+                <span className={styles.bannerPortraitNum}>01</span>
+                <span className={styles.bannerPortraitName}>Gary Laib</span>
+                <span className={styles.bannerPortraitRole}>Illustrator · Author</span>
+              </div>
+            </div>
+
+            <div className={styles.bannerDividerVert} />
+
+            <div className={styles.bannerPortrait}>
+              <div className={styles.bannerPortraitImg}>
+                <Image
+                  src="/images/Chris Wilhelm.jpg"
+                  alt="Chris Wilhelm"
+                  fill
+                  sizes="220px"
+                  className={styles.bannerPortraitPhoto}
+                  priority
+                />
+              </div>
+              <div className={styles.bannerPortraitInfo}>
+                <span className={styles.bannerPortraitNum}>02</span>
+                <span className={styles.bannerPortraitName}>Chris Wilhelm</span>
+                <span className={styles.bannerPortraitRole}>Game Artist · Animator</span>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* ── Artist bios ────────────────────────────────── */}
-      <section id="artists" className={`section ${styles.section}`}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Meet The Artists</span>
-            <h2>Gary &amp; Chris</h2>
-          </div>
+      {/* ── GARY LAIB ─────────────────────────────────────────── */}
+      <section className={styles.artistSection}>
+        <div className="wrap">
+          <div className={styles.artistLayout}>
 
-          <div className={styles.artistsGrid}>
-            {ARTISTS.map((a) => (
-              <div key={a.name} className={styles.artistCard}>
-                <div className={styles.artistAvatar}>{a.initial}</div>
-                <h2 className={styles.artistName}>{a.name}</h2>
-                <p className={styles.artistRole}>{a.role}</p>
-                <div className={styles.artistDivider} />
-                <p className={styles.artistBio}>{a.bio}</p>
-                <div className={styles.clientList}>
-                  <p className={styles.clientsLabel}>Notable Clients</p>
-                  <div className={styles.clientTags}>
-                    {a.clients.map((c) => (
-                      <span key={c} className={styles.clientTag}>{c}</span>
-                    ))}
-                  </div>
+            {/* Left: Photo + quick facts */}
+            <div className={styles.artistLeft}>
+              <div className={styles.photoWrap}>
+                <Image
+                  src="/images/web-gary-laib-196.jpg"
+                  alt="Gary Laib"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 420px"
+                  className={styles.photo}
+                  priority
+                />
+              </div>
+              <div className={styles.quickFacts}>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Role</span>
+                  <span className={styles.factValue}>Illustrator · Author · VO</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Experience</span>
+                  <span className={styles.factValue}>20+ years</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Books</span>
+                  <span className={styles.factValue}>Roon fantasy series</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Location</span>
+                  <span className={styles.factValue}>West Coast, USA</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Services ───────────────────────────────────── */}
-      <section id="services" className={`section ${styles.sectionAlt}`}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">What We Do</span>
-            <h2>Services</h2>
-            <p>Professional art production services for publishers, game studios, and individual clients.</p>
-          </div>
-          <div className={styles.servicesGrid}>
-            {SERVICES.map((s) => (
-              <div key={s.title} className={styles.serviceCard}>
-                <span className={styles.serviceIcon}>{s.icon}</span>
-                <h3 className={styles.serviceTitle}>{s.title}</h3>
-                <p className={styles.serviceDesc}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Show Schedule ──────────────────────────────── */}
-      <section id="shows" className={`section ${styles.section}`}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Find Us In Person</span>
-            <h2>Show Schedule</h2>
-            <p>Pick up originals, limited prints, and canvas works — or just say hello!</p>
-          </div>
-
-          {upcoming.length > 0 && (
-            <>
-              <h3 className={styles.showsSubhead}>Upcoming</h3>
-              <div className={styles.showsTable}>
-                {upcoming.map((show) => (
-                  <div key={show.id} className={styles.showRow}>
-                    <div className={styles.showDateCol}>
-                      <span className={styles.showDate}>{formatShowDate(show.date_start, show.date_end)}</span>
-                    </div>
-                    <div className={styles.showDetails}>
-                      <h4 className={styles.showName}>{show.title}</h4>
-                      <p className={styles.showLoc}>{show.location}</p>
-                    </div>
-                    {show.booth && <span className={styles.showBooth}>Booth {show.booth}</span>}
-                    {show.website && (
-                      <a href={show.website} target="_blank" rel="noopener noreferrer" className={styles.showLink}>
-                        Info →
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {past.length > 0 && (
-            <>
-              <h3 className={`${styles.showsSubhead} ${styles.pastSubhead}`}>Past Shows</h3>
-              <div className={`${styles.showsTable} ${styles.pastTable}`}>
-                {past.map((show) => (
-                  <div key={show.id} className={`${styles.showRow} ${styles.pastRow}`}>
-                    <div className={styles.showDateCol}>
-                      <span className={styles.showDate}>{formatShowDate(show.date_start, show.date_end)}</span>
-                    </div>
-                    <div className={styles.showDetails}>
-                      <h4 className={styles.showName}>{show.title}</h4>
-                      <p className={styles.showLoc}>{show.location}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </section>
-
-      {/* ── News ───────────────────────────────────────── */}
-      {news.length > 0 && (
-        <section id="news" className={`section ${styles.sectionAlt}`}>
-          <div className="container">
-            <div className="section-header">
-              <span className="section-label">Latest</span>
-              <h2>News &amp; Updates</h2>
+              <a
+                href="https://dot.cards/garylaibart"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactBtn}
+              >
+                Contact Gary ↗
+              </a>
             </div>
-            <div className={styles.newsGrid}>
-              {news.map((item) => (
-                <article key={item.id} className={styles.newsCard}>
-                  <time className={styles.newsDate} dateTime={item.date}>
-                    {new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                  </time>
-                  <h3 className={styles.newsTitle}>{item.title}</h3>
-                  <p className={styles.newsExcerpt}>{item.excerpt}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
-      {/* ── Projects ───────────────────────────────────── */}
-      {projects.length > 0 && (
-        <section id="projects" className={`section ${styles.section}`}>
-          <div className="container">
-            <div className="section-header">
-              <span className="section-label">In Progress</span>
-              <h2>Ongoing Projects</h2>
-            </div>
-            <div className={styles.projectsGrid}>
-              {projects.map((p) => (
-                <div key={p.id} className={styles.projectCard}>
-                  <div className={styles.projectHeader}>
-                    <h3 className={styles.projectTitle}>{p.title}</h3>
-                    <span className={`${styles.projectStatus} ${p.status === 'ongoing' ? styles.statusOngoing : styles.statusDone}`}>
-                      {p.status === 'ongoing' ? 'In Progress' : 'Completed'}
-                    </span>
-                  </div>
-                  <p className={styles.projectDesc}>{p.description}</p>
+            {/* Right: Bio + works */}
+            <div className={styles.artistRight}>
+              <div className={styles.nameBlock}>
+                <span className={styles.artistIndex}>01</span>
+                <h2 className={styles.artistName}>Gary Laib</h2>
+              </div>
+
+              <p className={styles.artistBio}>
+                Gary is an award-winning fantasy and children&apos;s book illustrator, concept artist, 
+                and author with over twenty years in the entertainment industry. He&apos;s worked with 
+                Blizzard Entertainment, Wizards of the Coast, Ubisoft, NCSoft, and Fox TV — 
+                bringing iconic characters and worlds to life through intricate linework and 
+                rich painterly color. He&apos;s also the creator of the <em>Roon</em> fantasy book series 
+                and a working voice-over artist.
+              </p>
+
+              <div className={styles.tags}>
+                <span className={styles.tag}>Fantasy Key Art</span>
+                <span className={styles.tag}>MTG Card Art</span>
+                <span className={styles.tag}>Children&apos;s Books</span>
+                <span className={styles.tag}>Character Design</span>
+                <span className={styles.tag}>Creature Design</span>
+              </div>
+
+              <div className={styles.worksRow}>
+                <p className={styles.worksLabel}>Selected Works</p>
+                <div className={styles.worksStrip}>
+                  {GARY_WORKS.map((w, i) => (
+                    <div key={i} className={styles.workThumb}>
+                      <Image
+                        src={w.src}
+                        alt={w.label}
+                        fill
+                        sizes="160px"
+                        className={styles.workImg}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+              </div>
 
-      {/* ── Contact ────────────────────────────────────── */}
-      <section id="contact" className={`section ${styles.sectionAlt}`}>
-        <div className="container">
-          <div className={styles.contactInner}>
-            <span className="section-label" style={{textAlign:'center',display:'block'}}>Get In Touch</span>
-            <h2 className={styles.contactTitle}>Work With Us</h2>
-            <p className={styles.contactSub}>
-              Interested in a commission, collaboration, or just want to say hello?<br />
-              We&apos;d love to hear from you.
+              <Link href="/portfolio" className={styles.portfolioLink}>
+                Browse full portfolio →
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className={styles.divider}>
+        <div className="wrap"><span className={styles.dividerLine} /></div>
+      </div>
+
+      {/* ── CHRIS WILHELM ─────────────────────────────────────── */}
+      <section className={styles.artistSection}>
+        <div className="wrap">
+          <div className={`${styles.artistLayout} ${styles.artistLayoutFlip}`}>
+
+            {/* Left: Bio + works (flipped to right on desktop) */}
+            <div className={styles.artistRight}>
+              <div className={styles.nameBlock}>
+                <span className={styles.artistIndex}>02</span>
+                <h2 className={styles.artistName}>Chris Wilhelm</h2>
+              </div>
+
+              <p className={styles.artistBio}>
+                Chris is a game artist, illustrator, and animator with two decades across AAA 
+                studios and top indie projects. He&apos;s served as concept artist, illustrator, and 
+                art director for franchises like <em>Dungeons &amp; Dragons</em>, <em>Shadowrun</em>, <em>BattleTech</em>, 
+                and <em>Magic: The Gathering</em>. His range spans 2D digital painting, 3D asset creation, 
+                character turnarounds, environment concept art, and cinematic sequential storytelling.
+              </p>
+
+              <div className={styles.tags}>
+                <span className={styles.tag}>AAA Concept Art</span>
+                <span className={styles.tag}>Environment Design</span>
+                <span className={styles.tag}>Sequential Art</span>
+                <span className={styles.tag}>2D / 3D Animation</span>
+                <span className={styles.tag}>Character Turnarounds</span>
+              </div>
+
+              <div className={styles.worksRow}>
+                <p className={styles.worksLabel}>Selected Works</p>
+                <div className={styles.worksStrip}>
+                  {CHRIS_WORKS.map((w, i) => (
+                    <div key={i} className={styles.workThumb}>
+                      <Image
+                        src={w.src}
+                        alt={w.label}
+                        fill
+                        sizes="160px"
+                        className={styles.workImg}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Link href="/portfolio" className={styles.portfolioLink}>
+                Browse full portfolio →
+              </Link>
+            </div>
+
+            {/* Right: Photo + quick facts */}
+            <div className={styles.artistLeft}>
+              <div className={styles.photoWrap}>
+                <Image
+                  src="/images/Chris Wilhelm.jpg"
+                  alt="Chris Wilhelm"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 420px"
+                  className={styles.photo}
+                  priority
+                />
+              </div>
+              <div className={styles.quickFacts}>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Role</span>
+                  <span className={styles.factValue}>Game Artist · Animator</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Experience</span>
+                  <span className={styles.factValue}>20+ years</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Specialty</span>
+                  <span className={styles.factValue}>AAA Visual Development</span>
+                </div>
+                <div className={styles.factRow}>
+                  <span className={styles.factLabel}>Location</span>
+                  <span className={styles.factValue}>West Coast, USA</span>
+                </div>
+              </div>
+              <a
+                href="https://dot.cards/artofthechill"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactBtn}
+              >
+                Contact Chris ↗
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Brands & Clients Marquee */}
+      <section id="brands" className="brands-section" style={{ background: '#090D11', border: 'none', padding: '5rem 0' }}>
+        <div className="wrap">
+          <div className="brands-header" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 className={styles.sectionHeading}>
+              Trusted by the Industry&apos;s Best
+            </h2>
+            <p className={styles.sectionDesc}>
+              From Magic: The Gathering and Blizzard to D&amp;D and Ubisoft — two decades of iconic collaboration.
             </p>
-            <a href="mailto:skyhurststudios@gmail.com" className="btn btn-primary">
-              Send Us an Email
-            </a>
-            <a
-              href="https://www.instagram.com/skyhurststudios"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`btn btn-outline ${styles.igBtn}`}
-            >
-              Follow on Instagram
-            </a>
+          </div>
+        </div>
+
+        <div className="brands-marquee-wrap" aria-label="Client Brands Row 1">
+          <div className="brands-track track-left" aria-hidden="true">
+            {[...CLIENT_LOGOS_ROW_1, ...CLIENT_LOGOS_ROW_1].map((b, idx) => (
+              <div key={`${b.name}-${idx}`} className="brand-logo-item" title={b.name}>
+                <Image src={b.src} alt={b.name} width={b.w} height={b.h} className="brand-logo-img" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="brands-marquee-wrap" aria-label="Client Brands Row 2" style={{ marginTop: '1.5rem' }}>
+          <div className="brands-track track-right" aria-hidden="true">
+            {[...CLIENT_LOGOS_ROW_2, ...CLIENT_LOGOS_ROW_2].map((b, idx) => (
+              <div key={`${b.name}-${idx}`} className="brand-logo-item" title={b.name}>
+                <Image src={b.src} alt={b.name} width={b.w} height={b.h} className="brand-logo-img" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Convention Booth */}
+      <section className={styles.boothSection}>
+        <div className="wrap">
+          <h2 className={styles.boothHeading}>Live in Artist Alley</h2>
+          <p className={styles.boothDesc}>
+            Find our booth at shows all over the West coast and neighboring states! We offer a wide selection of art prints and more. Join our mailing list and follow us on Instagram, and come say hello!
+          </p>
+          <div className={styles.boothImgWrapper}>
+            <Image
+              src="/images/img-2502_orig.jpg"
+              alt="Skyhurst Studios Convention Booth & Artist Alley"
+              fill
+              sizes="100vw"
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

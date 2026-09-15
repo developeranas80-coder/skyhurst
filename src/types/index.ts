@@ -17,8 +17,11 @@ export interface PortfolioItem {
   description?: string;
   year?: number;
   featured?: boolean;
-  // WP REST fields when using WP headless
   slug?: string;
+  client?: string;
+  medium?: string;
+  artist?: string;
+  dimensions?: string;
   acf?: Record<string, unknown>;
 }
 
@@ -31,6 +34,10 @@ export interface Show {
   booth?: string;
   website?: string;
   status: 'upcoming' | 'past';
+  badge?: string;
+  description?: string;
+  signingTimes?: string[];
+  imageUrl?: string;
 }
 
 export interface NewsItem {
@@ -40,6 +47,10 @@ export interface NewsItem {
   date: string;
   slug: string;
   content?: string;
+  category?: string;
+  author?: string;
+  readTime?: string;
+  imageUrl?: string;
 }
 
 export interface Project {
@@ -48,6 +59,12 @@ export interface Project {
   status: 'ongoing' | 'completed';
   description: string;
   imageUrl?: string;
+  slug?: string;
+  genre?: string;
+  chapter?: string;
+  artists?: string[];
+  gallery?: string[];
+  fullSummary?: string;
 }
 
 export interface CanvasOrder {
@@ -61,3 +78,4 @@ export interface CanvasOrder {
   address: string;
   notes?: string;
 }
+

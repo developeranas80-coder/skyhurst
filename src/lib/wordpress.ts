@@ -58,7 +58,7 @@ export async function getShows(status?: 'upcoming' | 'past'): Promise<Show[]> {
     const all = getMockShows();
     return status ? all.filter((s) => s.status === status) : all;
   }
-  const query = status ? `shows?acf_filter[status]=${status}` : 'shows';
+  const query = status ? `shows?acf_filter[status]=${status}&_embed` : 'shows?_embed';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any[] = await wpFetch(query);
   return data.map((item) => ({
@@ -70,11 +70,24 @@ export async function getShows(status?: 'upcoming' | 'past'): Promise<Show[]> {
     booth: item.acf?.booth_number,
     website: item.acf?.website_url,
     status: item.acf?.status || 'upcoming',
+    badge: item.acf?.badge,
+    description: item.acf?.description,
+    signingTimes: item.acf?.signing_times || [],
+    imageUrl:
+      item._embedded?.['wp:featuredmedia']?.[0]?.source_url ||
+      item.acf?.image_url ||
+      item.acf?.image ||
+      '/images/show-booth.jpg',
   }));
 }
 
+export async function getPortfolioItemById(id: number): Promise<PortfolioItem | null> {
+  const items = await getPortfolioItems();
+  return items.find((i) => i.id === id) || null;
+}
+
 // ─── News ─────────────────────────────────────────────────────────────────────
-export async function getNews(limit = 3): Promise<NewsItem[]> {
+export async function getNews(limit = 10): Promise<NewsItem[]> {
   if (USE_MOCK) return getMockNews().slice(0, limit);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any[] = await wpFetch(`posts?per_page=${limit}&_embed`);
@@ -84,7 +97,17 @@ export async function getNews(limit = 3): Promise<NewsItem[]> {
     excerpt: item.excerpt.rendered.replace(/<[^>]*>/g, ''),
     date: item.date,
     slug: item.slug,
+    content: item.content?.rendered || '',
+    category: item.acf?.category || 'Announcement',
+    author: item.acf?.author || 'Gary Laib & Chris Wilhelm',
+    readTime: item.acf?.read_time || '3 min read',
+    imageUrl: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/show-booth.jpg',
   }));
+}
+
+export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
+  const news = await getNews(50);
+  return news.find((n) => n.slug === slug) || null;
 }
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
@@ -98,7 +121,17 @@ export async function getProjects(): Promise<Project[]> {
     status: item.acf?.status || 'ongoing',
     description: item.acf?.description || '',
     imageUrl: item._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+    slug: item.slug,
+    genre: item.acf?.genre || 'Fantasy / Sci-Fi',
+    chapter: item.acf?.chapter || 'In Production',
+    artists: item.acf?.artists || ['Gary Laib', 'Chris Wilhelm'],
+    fullSummary: item.acf?.full_summary || '',
   }));
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const projects = await getProjects();
+  return projects.find((p) => p.slug === slug) || null;
 }
 
 // ─── Mock data (used until WP is configured) ──────────────────────────────────
@@ -550,40 +583,70 @@ function getMockShows(): Show[] {
     {
       id: 1,
       title: 'Fan Expo Portland',
-      location: 'Portland, OR',
+      location: 'Oregon Convention Center · Portland, OR',
       date_start: '2024-09-20',
       date_end: '2024-09-22',
-      booth: 'A-214',
+      booth: 'Booth A-214',
       website: 'https://fanexpo.com',
       status: 'upcoming',
+      badge: 'Limited Prints & Canvas Drop',
+      description: 'Join Gary Laib and Chris Wilhelm in Artist Alley for exclusive signed print releases, original sketch commissions, and live portfolio reviews.',
+      signingTimes: ['Fri: 2:00 PM – 4:00 PM', 'Sat: 1:00 PM – 3:30 PM', 'Sun: 11:00 AM – 1:00 PM'],
+      imageUrl: '/images/show-booth.jpg',
     },
     {
       id: 2,
       title: 'Rose City Comic Con',
-      location: 'Portland Convention Center, OR',
+      location: 'Portland Convention Center · Portland, OR',
       date_start: '2024-10-18',
       date_end: '2024-10-20',
-      booth: 'B-108',
+      booth: 'Booth B-108',
       website: 'https://rosecitycomiccon.com',
       status: 'upcoming',
+      badge: 'Artist Alley Row 4',
+      description: 'Skyhurst Studios returns to Rose City with large-format canvas masterworks, MTG artist proof cards, and original graphic novel issues.',
+      signingTimes: ['Fri: 3:00 PM – 5:00 PM', 'Sat: 12:00 PM – 3:00 PM', 'Sun: 2:00 PM – 4:00 PM'],
+      imageUrl: '/images/show-crowd.jpg',
     },
     {
       id: 3,
-      title: 'Emerald City Comic Con',
-      location: 'Seattle, WA',
-      date_start: '2024-03-14',
-      date_end: '2024-03-17',
-      booth: 'C-422',
-      status: 'past',
+      title: 'GeekCraft Expo Pacific NW',
+      location: 'Seattle Convention Center · Seattle, WA',
+      date_start: '2024-11-08',
+      date_end: '2024-11-10',
+      booth: 'Booth C-305',
+      website: 'https://geekcraftexpo.com',
+      status: 'upcoming',
+      badge: 'Live Signing & Canvases',
+      description: 'Featuring hand-finished canvas reproductions and custom metal prints. Special signing event for Echoes of the Rift Chapter 4.',
+      signingTimes: ['Sat: 1:00 PM – 4:00 PM', 'Sun: 12:00 PM – 2:00 PM'],
+      imageUrl: '/images/show-signing.jpg',
     },
     {
       id: 4,
+      title: 'Emerald City Comic Con',
+      location: 'Seattle Convention Center · Seattle, WA',
+      date_start: '2024-03-14',
+      date_end: '2024-03-17',
+      booth: 'Booth C-422',
+      website: 'https://emeraldcitycomiccon.com',
+      status: 'past',
+      badge: 'Sold Out Canvas Line',
+      description: 'A massive 4-day convention event featuring the debut release of Dandadan and Frieren key art prints.',
+      imageUrl: '/images/show-booth.jpg',
+    },
+    {
+      id: 5,
       title: 'San Diego Comic-Con',
-      location: 'San Diego, CA',
+      location: 'San Diego Convention Center · San Diego, CA',
       date_start: '2024-07-24',
       date_end: '2024-07-28',
-      booth: 'D-1201',
+      booth: 'Booth D-1201',
+      website: 'https://comic-con.org',
       status: 'past',
+      badge: 'AAA Studio Panelist',
+      description: 'Chris Wilhelm hosted a concept art workflow panel and signed limited-edition Magic: The Gathering card proofs.',
+      imageUrl: '/images/show-crowd.jpg',
     },
   ];
 }
@@ -597,22 +660,66 @@ function getMockNews(): NewsItem[] {
         'We\'re releasing an exclusive limited-edition print series at Fan Expo Portland this September. Only 50 copies of each piece — get them while they last!',
       date: '2024-08-15',
       slug: 'new-print-series-fan-expo',
+      category: 'Convention News',
+      author: 'Gary Laib',
+      readTime: '3 min read',
+      imageUrl: '/images/Illustration/imgi_11_arcane-11x17.jpg',
+      content: `We are thrilled to unveil our upcoming limited-edition print lineup debuting at **Fan Expo Portland 2024**! 
+
+Each print is produced using archival giclée pigment inks on heavy 310gsm museum cotton rag paper, hand-numbered and signed by both Gary Laib and Chris Wilhelm.
+
+### What’s in the Drop:
+* **Arcane — Piltover & Zaun** (11×17" Archival Matte — Edition of 50)
+* **Frieren: Beyond Journey’s End** (11×17" Archival Metallic — Edition of 35)
+* **Reze — The Bomb Demon** (12×18" High-Gloss Metallic — Edition of 50)
+
+> "We spent months dialing in the color profiles to ensure every pigment reflects the intensity of the original digital paintings." — *Gary Laib*
+
+If you are attending Fan Expo Portland, be sure to drop by **Booth A-214** early. Online reservations will also be opened for mailing list subscribers 24 hours prior to the show!`,
     },
     {
       id: 2,
-      title: 'Skyhurst Studios Wraps Blizzard Collaboration',
+      title: 'Skyhurst Studios Wraps Major Concept Art Collaboration',
       excerpt:
-        'After six months of collaboration, we\'ve wrapped our concept art work for Blizzard Entertainment\'s upcoming title. We can\'t share details yet — but it\'s epic.',
+        'After six months of intense visual development, we\'ve wrapped our concept art work for an unannounced fantasy RPG project. Here’s a peek into our studio workflow.',
       date: '2024-07-30',
       slug: 'blizzard-collaboration',
+      category: 'Studio Update',
+      author: 'Chris Wilhelm',
+      readTime: '4 min read',
+      imageUrl: '/images/Concept Art/imgi_4_christopher-wilhelm-templeofsahinna-02.jpg',
+      content: `For the past six months, Chris Wilhelm and Gary Laib have been embedded with a top AAA studio, crafting key environment paintings, character turnarounds, and creature designs for an unannounced next-generation title.
+
+### Behind the Canvas
+Over **140 unique assets** were delivered across three production phases:
+1. **Worldbuilder Architecture**: Establishing environmental motifs, temple structures, and ancient ruins.
+2. **Faction & Hero Key Visuals**: Armor explorations, weapon silhouettes, and color script guidelines.
+3. **Key Art & Moodshots**: Cinematic promotional paintings set in high-octane fantasy landscapes.
+
+While NDA restrictions prevent us from showing the final game assets right now, you can explore our public portfolio to see similar worldbuilding pieces like *Temple of Sahinna* and *Ral Zarek*.`,
     },
     {
       id: 3,
       title: '\"Echoes of the Rift\" Graphic Novel — Chapter 3 Released',
       excerpt:
-        'Chapter 3 of our ongoing graphic novel series is now available. Pick up a copy at our next show or order online through our store.',
+        'Chapter 3 of our ongoing graphic novel series is officially available! Pick up a physical copy at our next show or request a direct mail order.',
       date: '2024-07-01',
       slug: 'echoes-chapter-3',
+      category: 'Project Release',
+      author: 'Gary Laib & Chris Wilhelm',
+      readTime: '5 min read',
+      imageUrl: '/images/Sequential Art/imgi_6_crosslands-azoriasblade-2-pg28.jpg',
+      content: `The wait is over! **Chapter 3 of Echoes of the Rift** has officially printed and is now shipping worldwide.
+
+### Story Overview
+Following the dramatic climax of Chapter 2, twin sorcerers Azoria and Vaelen find themselves trapped inside the fractured Aether Core. As shadowy monstrosities breach the citadel gates, they must join forces with an unpredictable void stalker to survive.
+
+### Graphic Novel Specs:
+* **Format**: 36-page Full-Color Prestige Format Book
+* **Interior Art**: Pencils & Inks by Chris Wilhelm, Colors & Art Direction by Gary Laib
+* **Extras**: Includes 6 pages of raw concept sketches, world map layout, and character commentary!
+
+Pick up your copy at our upcoming convention booths or reach out via our [Order Page](/order) for direct signed copies!`,
     },
   ];
 }
@@ -622,23 +729,70 @@ function getMockProjects(): Project[] {
     {
       id: 1,
       title: 'Echoes of the Rift',
+      slug: 'echoes-of-the-rift',
       status: 'ongoing',
-      description:
-        'An epic fantasy graphic novel series following twin sorcerers across fractured dimensions. Currently on Chapter 4.',
+      genre: 'High Fantasy / Sequential Art',
+      chapter: 'Chapter 4 (In Production)',
+      artists: ['Gary Laib', 'Chris Wilhelm'],
+      imageUrl: '/images/Sequential Art/imgi_6_crosslands-azoriasblade-2-pg28.jpg',
+      description: 'An epic fantasy graphic novel series following twin sorcerers across fractured dimensions. Currently on Chapter 4.',
+      fullSummary: 'Echoes of the Rift is Skyhurst Studios\' flagship original graphic novel series. Combining intricate dark fantasy worldbuilding with kinetic cinematic sequencing, the story chronicles twin spellcasters navigating planar fractures to stop an ancient void entity.',
+      gallery: [
+        '/images/Sequential Art/imgi_2_crosslands-azoriasblade-2-pg24.jpg',
+        '/images/Sequential Art/imgi_3_crosslands-azoriasblade-2-pg25.jpg',
+        '/images/Sequential Art/imgi_4_crosslands-azoriasblade-2-pg26.jpg',
+        '/images/Sequential Art/imgi_6_crosslands-azoriasblade-2-pg28.jpg',
+      ],
     },
     {
       id: 2,
       title: 'Children\'s Book Series — "Wyrm & Friends"',
+      slug: 'wyrm-and-friends',
       status: 'ongoing',
-      description:
-        'A heartwarming illustrated children\'s book series by Gary Laib featuring a lovable young dragon navigating the human world.',
+      genre: 'Children’s Fantasy & Storybook',
+      chapter: 'Book 2 — "Wyrm’s First Snow"',
+      artists: ['Gary Laib'],
+      imageUrl: '/images/Illustration/imgi_36_meetingalittledragon.jpg',
+      description: 'A heartwarming illustrated children\'s book series by Gary Laib featuring a lovable young dragon navigating the human world.',
+      fullSummary: 'Wyrm & Friends is a charming picture book universe celebrating curiosity, kindness, and magic. Designed for readers of all ages, it fuses warm watercolor textures with playful character storytelling.',
+      gallery: [
+        '/images/Illustration/imgi_36_meetingalittledragon.jpg',
+        '/images/Illustration/imgi_22_the-great-debate-canvas.jpg',
+      ],
     },
     {
       id: 3,
       title: 'Indie Game — "Void Stalker"',
+      slug: 'void-stalker',
       status: 'ongoing',
-      description:
-        'Providing full concept art and character design for a roguelite indie game in development by a Pacific Northwest studio.',
+      genre: 'Sci-Fi Action / Concept Art',
+      chapter: 'Alpha Visual Direction',
+      artists: ['Chris Wilhelm'],
+      imageUrl: '/images/Concept Art/imgi_5_christopher-wilhelm-hero-0014-armorer-concept.jpg',
+      description: 'Providing full concept art and character design for a roguelite indie game in development by a Pacific Northwest studio.',
+      fullSummary: 'Void Stalker is an upcoming tactical action roguelite set in a gritty retro-futuristic universe. Skyhurst Studios handles total visual development, including playable character sheets, weapon variants, and boss environment concept art.',
+      gallery: [
+        '/images/Concept Art/imgi_5_christopher-wilhelm-hero-0014-armorer-concept.jpg',
+        '/images/Concept Art/imgi_10_christopher-wilhelm-thalia-concept-01.jpg',
+        '/images/Concept Art/imgi_11_christopher-wilhelm-portfolio-thalia.jpg',
+      ],
+    },
+    {
+      id: 4,
+      title: 'Crosslands: Azoria’s Blade',
+      slug: 'crosslands-azorias-blade',
+      status: 'completed',
+      genre: 'Fantasy Key Art & Poster Series',
+      chapter: 'Volume 1 Complete',
+      artists: ['Gary Laib', 'Chris Wilhelm'],
+      imageUrl: '/images/Illustration/imgi_28_crosslands-azoriasblade-1.jpg',
+      description: 'A 2-part key art & poster illustration series celebrating the swordmasters of the Crosslands.',
+      fullSummary: 'Crosslands: Azoria’s Blade was developed as a companion art suite featuring high-resolution poster compositions and canvas releases.',
+      gallery: [
+        '/images/Illustration/imgi_28_crosslands-azoriasblade-1.jpg',
+        '/images/Illustration/imgi_29_crosslands-azoriasblade-2.jpg',
+      ],
     },
   ];
 }
+

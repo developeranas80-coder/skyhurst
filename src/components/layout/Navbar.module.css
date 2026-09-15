@@ -50,13 +50,13 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
   list-style: none;
 }
 .link {
   font-family: var(--font-heading);
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-secondary);
   text-decoration: none;
@@ -96,7 +96,7 @@
   transform-origin: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .toggle { display: flex; }
 
   .links {
