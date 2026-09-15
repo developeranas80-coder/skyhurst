@@ -6,11 +6,10 @@ import styles from './contact.module.css';
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    projectType: 'Illustration & Key Art',
-    budget: '$1,000 – $3,000',
-    message: '',
+    comment: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,162 +19,140 @@ export default function ContactPage() {
 
   return (
     <div className={styles.page}>
+      <div className="wrap">
+        <div className={styles.container}>
 
-      {/* ── PAGE HEADER ── */}
-      <header className={styles.header}>
-        <div className="wrap">
-          <p className={styles.headerPre}>Skyhurst Studios</p>
-          <h1 className={styles.headerTitle}>Get in Touch</h1>
-          <p className={styles.headerSub}>
-            Commission inquiries, licensing, convention bookings, or just want to say hello —<br />
-            we respond within 24–48 hours.
-          </p>
-        </div>
-        <div className={styles.headerRule} />
-      </header>
+          {/* ── Overview Section ── */}
+          <header className={styles.header}>
+            <span className={styles.headerKicker}>Skyhurst Studios</span>
+            <h1 className={styles.title}>Contact &amp; Inquiries</h1>
+            <p className={styles.description}>
+              Skyhurst Studios is a full service art studio offering commissioned illustrations, contract production art, animation, technical art, and art direction consultation services. We would love to hear about your project and how best we can contribute to its success! Fill out the form below and we will respond as soon as possible. We look forward to hearing from you!
+            </p>
 
-      {/* ── MAIN LAYOUT ── */}
-      <section className={styles.main}>
-        <div className="wrap">
-          <div className={styles.layout}>
+            <div className={styles.socialCallout}>
+              <a
+                href="https://www.instagram.com/skyhurst_studios"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.instagramLink}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+                </svg>
+                <span>Follow us on Instagram!</span>
+                <span className={styles.arrow}>↗</span>
+              </a>
+            </div>
+          </header>
 
-            {/* ── LEFT: Info ── */}
-            <div className={styles.infoCol}>
+          <div className={styles.divider} />
 
-              {/* Direct contacts */}
-              <div className={styles.block}>
-                <p className={styles.blockLabel}>Direct Contacts</p>
-
-                <a href="mailto:info@skyhurststudios.com" className={styles.contactRow}>
-                  <span className={styles.contactName}>General &amp; Licensing</span>
-                  <span className={styles.contactEmail}>info@skyhurststudios.com</span>
-                </a>
-                <div className={styles.rowLine} />
-
-                <a href="https://dot.cards/garylaibart" target="_blank" rel="noopener noreferrer" className={styles.contactRow}>
-                  <span className={styles.contactName}>Gary Laib — Illustrator &amp; Author</span>
-                  <span className={styles.contactEmail}>dot.cards/garylaibart ↗</span>
-                </a>
-                <div className={styles.rowLine} />
-
-                <a href="https://dot.cards/artofthechill" target="_blank" rel="noopener noreferrer" className={styles.contactRow}>
-                  <span className={styles.contactName}>Chris Wilhelm — Game Artist</span>
-                  <span className={styles.contactEmail}>dot.cards/artofthechill ↗</span>
-                </a>
-                <div className={styles.rowLine} />
-              </div>
-
-              {/* FAQ */}
-              <div className={styles.block}>
-                <p className={styles.blockLabel}>Common Questions</p>
-
-                <div className={styles.faqItem}>
-                  <p className={styles.faqQ}>What are typical turnaround times?</p>
-                  <p className={styles.faqA}>Single key illustrations take 2–3 weeks. Full concept art packages or graphic novel chapters run on a custom milestone schedule.</p>
-                </div>
-                <div className={styles.faqItem}>
-                  <p className={styles.faqQ}>Do you accept personal commissions?</p>
-                  <p className={styles.faqA}>Yes — personal commissions are open depending on schedule and convention availability.</p>
-                </div>
-                <div className={styles.faqItem}>
-                  <p className={styles.faqQ}>How do canvas print orders work?</p>
-                  <p className={styles.faqA}>Order via our Canvas Order Form or pick them up in person at our convention booths across the West Coast.</p>
-                </div>
-              </div>
-
+          {/* ── Form Section ── */}
+          <section className={styles.formSection}>
+            <div className={styles.formHeader}>
+              <h2 className={styles.formTitle}>Reach out to us!</h2>
+              <p className={styles.requiredNotice}>* Indicates required field</p>
             </div>
 
-            {/* ── RIGHT: Form ── */}
-            <div className={styles.formCol}>
-              <p className={styles.blockLabel}>Send an Inquiry</p>
-
-              {submitted ? (
-                <div className={styles.successMsg}>
-                  <span className={styles.successCheck}>✓</span>
-                  <p>Message received. We&apos;ll be in touch within 24–48 hours.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className={styles.form}>
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Name</label>
+            {submitted ? (
+              <div className={styles.successBox}>
+                <div className={styles.successIcon}>✓</div>
+                <h3 className={styles.successTitle}>Thank you!</h3>
+                <p className={styles.successText}>
+                  Your message has been sent. We will respond as soon as possible!
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({ firstName: '', lastName: '', email: '', comment: '' });
+                  }}
+                  className={styles.resetBtn}
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className={styles.form}>
+                
+                {/* Name * */}
+                <div className={styles.fieldGroup}>
+                  <label className={styles.mainLabel}>
+                    Name <span className={styles.reqStar}>*</span>
+                  </label>
+                  <div className={styles.nameRow}>
+                    <div className={styles.subField}>
                       <input
                         type="text"
                         required
+                        id="first-name"
+                        value={formData.firstName}
+                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                         className={styles.input}
-                        placeholder="Your name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       />
+                      <span className={styles.subLabel}>First</span>
                     </div>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Email</label>
+                    <div className={styles.subField}>
                       <input
-                        type="email"
+                        type="text"
                         required
+                        id="last-name"
+                        value={formData.lastName}
+                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                         className={styles.input}
-                        placeholder="your@email.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
+                      <span className={styles.subLabel}>Last</span>
                     </div>
                   </div>
+                </div>
 
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Project Type</label>
-                      <select
-                        className={styles.select}
-                        value={formData.projectType}
-                        onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                      >
-                        <option>Illustration &amp; Key Art</option>
-                        <option>Game Concept Art &amp; Visual Dev</option>
-                        <option>Sequential Comic / Graphic Novel</option>
-                        <option>Art Direction &amp; Style Guide</option>
-                        <option>Children&apos;s Book Illustration</option>
-                        <option>Convention Booking / Appearance</option>
-                        <option>Other Inquiry</option>
-                      </select>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Budget Range</label>
-                      <select
-                        className={styles.select}
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      >
-                        <option>Under $1,000</option>
-                        <option>$1,000 – $3,000</option>
-                        <option>$3,000 – $7,500</option>
-                        <option>$7,500 – $15,000+</option>
-                        <option>N/A (General Inquiry)</option>
-                      </select>
-                    </div>
-                  </div>
+                {/* Email * */}
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="email" className={styles.mainLabel}>
+                    Email <span className={styles.reqStar}>*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    id="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={styles.input}
+                  />
+                </div>
 
-                  <div className={styles.formGroup}>
-                    <label className={styles.label}>Message</label>
-                    <textarea
-                      required
-                      className={styles.textarea}
-                      placeholder="Tell us about your project, timeline, and deliverables..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    />
-                  </div>
+                {/* Comment * */}
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="comment" className={styles.mainLabel}>
+                    Comment <span className={styles.reqStar}>*</span>
+                  </label>
+                  <textarea
+                    required
+                    id="comment"
+                    rows={6}
+                    value={formData.comment}
+                    onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                    className={styles.textarea}
+                  />
+                </div>
 
+                {/* Submit */}
+                <div className={styles.submitRow}>
                   <button type="submit" className={styles.submitBtn}>
-                    Send Message →
+                    <span>Submit</span>
+                    <span className={styles.btnArrow}>→</span>
                   </button>
-                </form>
-              )}
-            </div>
+                </div>
 
-          </div>
+              </form>
+            )}
+          </section>
+
         </div>
-      </section>
-
+      </div>
     </div>
   );
 }

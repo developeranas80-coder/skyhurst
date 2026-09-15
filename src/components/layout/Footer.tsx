@@ -74,7 +74,7 @@ export default function Footer() {
               Contact
             </Link>
             <a
-              href="https://www.instagram.com/skyhurststudios"
+              href="https://www.instagram.com/skyhurst_studios"
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.menuLink} ${styles.socialLink}`}

@@ -1,21 +1,24 @@
-/* ── Page ─────────────────────────────────────── */
+/* ─── Contact Page Container ──────────────────────────────────── */
 .page {
-  padding-top: 120px;
+  padding-top: 140px;
   min-height: 100vh;
-  background: #000;
-  color: #fff;
+  background: #000000;
+  color: #ffffff;
 }
 
-/* ── Header ───────────────────────────────────── */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0 7rem;
+}
+
+/* ─── Header / Overview Section ────────────────────────────────── */
 .header {
-  padding: 4rem 0 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.header .wrap {
-  padding-bottom: 3rem;
-}
-
-.headerPre {
+.headerKicker {
   font-family: 'Syne', sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
@@ -25,243 +28,285 @@
   margin-bottom: 1rem;
 }
 
-.headerTitle {
+.title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #fff;
+  letter-spacing: -0.03em;
+  color: #ffffff;
   line-height: 1.05;
-  margin-bottom: 1rem;
-}
-
-.headerSub {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.7;
-  max-width: 560px;
-}
-
-.headerRule {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.07);
-  width: 100%;
-}
-
-/* ── Main layout ──────────────────────────────── */
-.main {
-  padding: 5rem 0 7rem;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 6rem;
-  align-items: start;
-}
-
-@media (max-width: 860px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-  }
-}
-
-/* ── Shared block label ───────────────────────── */
-.blockLabel {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(148, 171, 196, 0.6);
   margin-bottom: 1.5rem;
 }
 
-.block {
-  margin-bottom: 3.5rem;
-}
-
-/* ── Contact rows ─────────────────────────────── */
-.contactRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  padding: 1rem 0;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.contactRow:hover {
-  opacity: 0.7;
-}
-
-.contactName {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #fff;
-}
-
-.contactEmail {
+.description {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  color: rgba(148, 171, 196, 0.8);
-  white-space: nowrap;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+  margin-bottom: 2rem;
 }
 
-.rowLine {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.07);
-}
-
-/* ── FAQ ──────────────────────────────────────── */
-.faqItem {
-  margin-bottom: 1.75rem;
-}
-
-.faqQ {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.35rem;
-}
-
-.faqA {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.65;
-}
-
-/* ── Form ─────────────────────────────────────── */
-.form {
+/* ─── Instagram Callout ────────────────────────────────────────── */
+.socialCallout {
   display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.formRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-}
-
-@media (max-width: 600px) {
-  .formRow {
-    grid-template-columns: 1fr;
-  }
-}
-
-.formGroup {
-  margin-bottom: 1.5rem;
-}
-
-.label {
-  display: block;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  align-items: center;
   margin-bottom: 0.5rem;
 }
 
-.input,
-.select,
-.textarea {
+.instagramLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 22px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.instagramLink:hover {
+  background: #11171e;
+  border-color: #94abc4;
+  color: #94abc4;
+  transform: translateY(-2px);
+}
+
+.arrow {
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.instagramLink:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ─── Hairline Divider ────────────────────────────────────────── */
+.divider {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0;
-  padding: 0.65rem 0;
-  color: #fff;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 3.5rem 0;
+}
+
+/* ─── Form Section ─────────────────────────────────────────────── */
+.formSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.formHeader {
+  margin-bottom: 2.5rem;
+}
+
+.formTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.requiredNotice {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+/* ─── Form Elements ────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mainLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+.reqStar {
+  color: #94abc4;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .nameRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.subField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.subLabel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.input {
+  width: 100%;
+  background: #080c10;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: #ffffff;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.95rem;
-  transition: border-color 0.2s ease;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.input::placeholder,
-.textarea::placeholder {
-  color: rgba(255, 255, 255, 0.2);
-}
-
-.input:focus,
-.select:focus,
-.textarea:focus {
+  padding: 13px 16px;
   outline: none;
-  border-bottom-color: #94ABC4;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.select {
-  cursor: pointer;
-}
-
-.select option {
-  background: #0d1117;
-  color: #fff;
+.input:focus {
+  border-color: #94abc4;
+  background: #0d1218;
 }
 
 .textarea {
-  min-height: 120px;
+  width: 100%;
+  background: #080c10;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  outline: none;
   resize: vertical;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  padding: 0.75rem;
-  margin-top: 0.25rem;
+  min-height: 140px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .textarea:focus {
-  border-color: #94ABC4;
+  border-color: #94abc4;
+  background: #0d1218;
+}
+
+/* ─── Submit Button ────────────────────────────────────────────── */
+.submitRow {
+  margin-top: 0.5rem;
 }
 
 .submitBtn {
-  align-self: flex-start;
-  margin-top: 0.5rem;
-  padding: 12px 28px;
-  background: #fff;
-  color: #000;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #000000;
   font-family: 'Syne', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 32px;
   border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submitBtn:hover {
+  background: #94abc4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(148, 171, 196, 0.25);
+}
+
+.btnArrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.submitBtn:hover .btnArrow {
+  transform: translateX(3px);
+}
+
+/* ─── Success Box ──────────────────────────────────────────────── */
+.successBox {
+  background: rgba(18, 24, 31, 0.7);
+  border: 1px solid rgba(148, 171, 196, 0.3);
+  border-radius: 6px;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.successIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.successTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.successText {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+.resetBtn {
+  margin-top: 12px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.submitBtn:hover {
-  background: #94ABC4;
-  transform: translateY(-2px);
-}
-
-/* ── Success ──────────────────────────────────── */
-.successMsg {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.successCheck {
-  font-size: 1.4rem;
-  color: #94ABC4;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.successMsg p {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
+.resetBtn:hover {
+  border-color: #94abc4;
+  color: #94abc4;
 }
